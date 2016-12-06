@@ -7,7 +7,7 @@ module.exports = function (req, res, next) {
   res.on('finish', function() {
     var duration = +new Date() - start;
     var message = `${method} to ${url} \ntook ${duration} ms \n\n`;
-    
+    stream.write(message);
   });
   next();
 }
