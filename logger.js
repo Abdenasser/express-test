@@ -5,7 +5,7 @@ module.exports = function (req, res, next) {
   var method = req.method;
 
   res.on('finish', function() {
-
+    var duration = +new Date() - start;
   });
   next();
 }
