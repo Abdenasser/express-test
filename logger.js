@@ -4,5 +4,8 @@ module.exports = function (req, res, next) {
   var url = req.url;
   var method = req.method;
 
+  res.on('finish', function() {
+
+  });
   next();
 }
