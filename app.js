@@ -13,17 +13,13 @@ app.use(logger);
 
 app.use(express.static('public'));
 
-app.get('/blocks', function(req, res) {
-  if (req.query.limit >= 0) {
-    res.json(blocks.slice(0, req.query.limit));
-  } else {
-    res.json(blocks)
-  }
-});
-
 app.get('/blocks/:name', function(req, res) {
   var description = blocks[req.params.name];
-  res.json(description);
+  if (!description) {
+    res.status(404).json(`No description found for ${req.params.name}`);
+  } else {
+    res.json(description);
+  }
 });
 
 app.listen(3000, function() {
