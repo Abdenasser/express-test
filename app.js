@@ -21,6 +21,11 @@ app.get('/blocks', function(req, res) {
   }
 });
 
+app.get('/blocks/:name', function(req, res) {
+  var description = blocks[req.params.name];
+  res.json(description);
+});
+
 app.listen(3000, function() {
   console.log('listening on 3000 \n');
 });
