@@ -14,7 +14,9 @@ app.use(logger);
 app.use(express.static('public'));
 
 app.get('/blocks/:name', function(req, res) {
-  var description = blocks[req.params.name];
+  var name = req.params.name;
+  var block = name[0].toUpperCase() + name.slice(1).toLowerCase();
+  var description = blocks[block];
   if (!description) {
     res.status(404).json(`No description found for ${req.params.name}`);
   } else {
