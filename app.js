@@ -18,10 +18,18 @@ app.use(logger);
 
 app.use(express.static('public'));
 
-app.get('/blocks/:name', function(req, res) {
+app.param('name', function(req, res, next) {
   var name = req.params.name;
   var block = name[0].toUpperCase() + name.slice(1).toLowerCase();
-  var description = blocks[block];
+
+  req.blockName = block;
+
+  next();
+});
+
+
+app.get('/blocks/:name', function(req, res) {
+  var description = blocks[req.blockName];
   if (!description) {
     res.status(404).json(`No description found for ${req.params.name}`);
   } else {
@@ -30,9 +38,7 @@ app.get('/blocks/:name', function(req, res) {
 });
 
 app.get('/locations/:name', function(req, res) {
-  var name = req.params.name;
-  var location = name[0].toUpperCase() + name.slice(1).toLowerCase();
-  var description = locations[location];
+  var description = locations[req.blockName];
   if (!description) {
     res.status(404).json(`No description found for ${req.params.name}`);
   } else {
